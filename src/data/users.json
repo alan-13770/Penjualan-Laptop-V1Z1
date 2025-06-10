@@ -1,0 +1,4 @@
+[
+  { "id": 1, "nama": "Admin Utama", "email": "admin@gmail.com", "role": "Admin" },
+  { "id": 2, "nama": "Budi Santoso", "email": "budi.s@gmail.com", "role": "Editor" }
+]

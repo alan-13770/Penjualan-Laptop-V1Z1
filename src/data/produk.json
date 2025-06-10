@@ -1,0 +1,5 @@
+[
+  { "id": 1, "brand": "Asus", "model": "ROG Zephyrus G14", "cpu": "AMD Ryzen 9", "ram": "16GB DDR5", "storage": "1TB SSD", "harga": "28500000", "stok": 15 },
+  { "id": 2, "brand": "Apple", "model": "Macbook Pro 14 M3", "cpu": "Apple M3 Pro", "ram": "18GB Unified", "storage": "512GB SSD", "harga": "35000000", "stok": 10 },
+  { "id": 3, "brand": "Dell", "model": "XPS 15", "cpu": "Intel Core i7-13700H", "ram": "32GB DDR5", "storage": "1TB SSD", "harga": "31000000", "stok": 20 }
+]
