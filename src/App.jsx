@@ -8,9 +8,9 @@ import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
 // Halaman Auth (di-import langsung untuk menghindari white screen)
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Forgot from "./pages/auth/Forgot";
+// import Login from "./pages/auth/Login";
+// import Register from "./pages/auth/Register";
+// import Forgot from "./pages/auth/Forgot";
 
 // Halaman Utama (di-load secara lazy)
 const Dashboard = React.lazy(() => import("./pages/DashboardPage"));
