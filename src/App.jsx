@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Loading from "./components/Loading";
 import "./assets/tailwind.css";
 
@@ -8,14 +8,16 @@ import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 
 // Halaman Auth (di-import langsung untuk menghindari white screen)
-// import Login from "./pages/auth/Login";
-// import Register from "./pages/auth/Register";
-// import Forgot from "./pages/auth/Forgot";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Forgot from "./pages/auth/Forgot";
 
 // Halaman Utama (di-load secara lazy)
-const Dashboard = React.lazy(() => import("./pages/DashboardPage"));
+// Gunakan nama yang konsisten, contoh: DashboardPage
+const DashboardPage = React.lazy(() => import("./pages/DashboardPage"));
 const ProdukPage = React.lazy(() => import("./pages/ProdukPage"));
-const UsersPage = React.lazy(()=> import("./pages/Userspage"));
+// Perbaiki nama file di sini menjadi 'UsersPage' dengan 'P' besar jika nama filenya begitu
+const UsersPage = React.lazy(() => import("./pages/UsersPage")); 
 const ArtikelPage = React.lazy(() => import("./pages/ArtikelPage"));
 const FaqPage = React.lazy(() => import("./pages/FaqPage"));
 const TeamPage = React.lazy(() => import("./pages/TeamPage"));
@@ -39,7 +41,8 @@ function App() {
           </Route>
           
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Dashboard />} />
+            {/* Perbaiki elemen di sini menjadi DashboardPage */}
+            <Route path="/" element={<DashboardPage />} /> 
             <Route path="/produk" element={<ProdukPage />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/artikel" element={<ArtikelPage />} />

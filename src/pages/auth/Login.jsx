@@ -3,44 +3,101 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { BsFillExclamationDiamondFill } from 'react-icons/bs';
 import { ImSpinner2 } from 'react-icons/im';
+import AuthLayout from '../../layouts/AuthLayout';
 
 const Login = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [dataForm, setDataForm] = useState({ username: "kminchelle", password: "0lelplR" });
+    const [dataForm, setDataForm] = useState({
+        username: "kminchelle", // dummyjson uses 'username'
+        password: "0lelplR",
+    });
 
-    const handleChange = (evt) => setDataForm({ ...dataForm, [evt.target.name]: evt.target.value });
+    const handleChange = (evt) => {
+        const { name, value } = evt.target;
+        setDataForm({ ...dataForm, [name]: value });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
+
         axios.post("https://dummyjson.com/auth/login", {
             username: dataForm.username,
             password: dataForm.password,
         })
         .then((response) => {
+            console.log("Login Success:", response.data);
             localStorage.setItem('userToken', response.data.token);
-            navigate("/");
+            navigate("/"); // Arahkan ke dashboard (halaman utama)
         })
-        .catch((err) => setError(err.response?.data?.message || "An error occurred"))
-        .finally(() => setLoading(false));
+        .catch((err) => {
+            setError(err.response?.data?.message || "Terjadi kesalahan");
+        })
+        .finally(() => {
+            setLoading(false);
+        });
     };
 
     return (
-        <div>
-            <h2 className="mb-2 text-3xl font-bold text-gray-800">Admin Log In</h2>
-            <p className="mb-6 text-gray-500">Silakan masukkan detail Anda.</p>
-            {error && <div className="flex items-center gap-2 p-3 mb-5 text-sm text-red-700 bg-red-100 rounded-md"><BsFillExclamationDiamondFill /> {error}</div>}
-            <form onSubmit={handleSubmit} className="space-y-6">
-                <div><label className="block mb-1 text-sm font-medium text-gray-700">Username</label><input type="text" name="username" value={dataForm.username} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg bg-gray-50" required /></div>
-                <div><label className="block mb-1 text-sm font-medium text-gray-700">Password</label><input type="password" name="password" value={dataForm.password} onChange={handleChange} className="w-full px-4 py-2 border rounded-lg bg-gray-50" required /></div>
-                <div className="flex justify-end text-sm"><Link to="/forgot" className="font-medium text-indigo-600 hover:text-indigo-500">Lupa Password?</Link></div>
-                <button type="submit" disabled={loading} className="flex justify-center w-full py-3 font-semibold text-white bg-indigo-600 rounded-lg shadow-md hover:bg-indigo-700 disabled:opacity-70">{loading ? <ImSpinner2 className="animate-spin" /> : 'Log In'}</button>
-                <p className="text-sm text-center">Belum punya akun? <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">Daftar</Link></p>
+        <AuthLayout>
+            <h2 className="mb-6 text-2xl font-semibold text-center text-gray-700">
+                Welcome Back 👋
+            </h2>
+            {error && (
+                <div className="flex items-center p-5 mb-5 text-sm font-light text-gray-600 bg-red-200 rounded">
+                    <BsFillExclamationDiamondFill className="text-lg text-red-600 me-2" />
+                    {error}
+                </div>
+            )}
+            
+            <form onSubmit={handleSubmit}>
+                <div className="mb-5">
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                        Username
+                    </label>
+                    <input
+                        type="text"
+                        name="username"
+                        value={dataForm.username}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg shadow-sm bg-gray-50"
+                        placeholder="kminchelle"
+                    />
+                </div>
+                <div className="mb-6">
+                    <label className="block mb-1 text-sm font-medium text-gray-700">
+                        Password
+                    </label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={dataForm.password}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 placeholder-gray-400 border border-gray-300 rounded-lg shadow-sm bg-gray-50"
+                        placeholder="********"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex items-center justify-center w-full px-4 py-2 mb-4 font-semibold text-white transition duration-300 bg-green-500 rounded-lg hover:bg-green-600 disabled:opacity-50"
+                >
+                    {loading ? <ImSpinner2 className="animate-spin" /> : 'Login'}
+                </button>
+
+                <div className="flex justify-between text-sm text-gray-600">
+                    <Link to="/forgot" className="text-blue-600 hover:underline">
+                        Forgot Password?
+                    </Link>
+                    <Link to="/register" className="text-blue-600 hover:underline">
+                        Register
+                    </Link>
+                </div>
             </form>
-        </div>
+        </AuthLayout>
     );
 };
 export default Login;
